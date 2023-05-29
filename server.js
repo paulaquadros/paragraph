@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// P/ fins de estudo ;) -> vou usar depois
+// P/ fins de estudo ;) >>> vou usar depois
 
 const server = http.createServer(async (req, res) => {
   // Async faz com que a função seja assíncrona, permitindo o uso de await
