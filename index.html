@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<!-- P/ fins de estudo, vou usar depois ;) -->
+
+<head>
+    <title>Gerador de Lorem Ipsum</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1>Gerador de Parágrafos Lorem Ipsum</h1>
+    <form id="loremForm">
+        <label for="numberInput">Número de parágrafos:</label>
+        <input type="number" id="numberInput" name="numberInput">
+        <button type="submit">Gerar</button>
+    </form>
+
+    <div id="resultContainer"></div>
+
+    <script>
+        // Quando o documento estiver pronto (ready), executa 
+        $(document).ready(function () {
+            $('#loremForm').submit(function (event) {
+                event.preventDefault(); // Evita que o formulário seja enviado 
+                var number = $('#numberInput').val(); // Pega o valor do campo de número de parágrafos
+
+                // Faz uma requisição AJAX para a API 
+                $.ajax({
+                    url: '/api/lorem',
+                    method: 'GET',
+                    headers: { 'x-number': number },
+                    success: function (response) { // Quando a requisição for bem sucedida, executa 
+                        var paragraphs = response.paragraphs;
+                        var resultContainer = $('#resultContainer');
+                        resultContainer.empty(); // Limpa o conteúdo do container
+
+                        paragraphs.forEach(function (paragraph) { // Para cada parágrafo, cria um elemento <p> e adiciona no container
+                            var paragraphElement = $('<p>').text(paragraph);
+                            resultContainer.append(paragraphElement); // Adiciona o parágrafo no container, como um filho
+                        });
+                    },
+                    // Quando a requisição falhar, executa 
+                    error: function () {
+                        alert('Ocorreu um erro ao solicitar o Lorem Ipsum.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
